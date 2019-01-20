@@ -1,4 +1,5 @@
 package cc.shrestha.ualberta5star;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,56 +7,78 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import java.util.List;
 
-public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ProductViewHolder> {
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 
-    private Context mCtx;
-    private List<Building> buildingList;
+public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
+    private Context mContext;
+    private ArrayList<BuildingItem> mBuildingList;
+    private OnItemClickListener mListener;
 
-    public BuildingAdapter(Context mCtx, List<Building> buildingList) {
-        this.mCtx = mCtx;
-        this.buildingList = buildingList;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public BuildingAdapter(Context context, ArrayList<BuildingItem> buildingList) {
+        mContext = context;
+        mBuildingList = buildingList;
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.building_list, null);
-        return new ProductViewHolder(view);
+    public BuildingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.building_item, parent, false);
+        return new BuildingViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
-        Building building = buildingList.get(position);
+    public void onBindViewHolder(BuildingViewHolder holder, int position) {
+        BuildingItem currentItem = mBuildingList.get(position);
 
-        //loading the image
-        Glide.with(mCtx)
-                .load(building.getImage())
-                .into(holder.imageView);
+        String imageUrl = currentItem.getImageUrl();
+        String buildingShortName = currentItem.getShortName();
+        String buildingLongName = currentItem.getLongName();
+        double avgRating = currentItem.getRating();
 
-        holder.textViewTitle.setText(building.getName());
-        holder.textViewShortDesc.setText(building.getShortdesc());
-        holder.textViewRating.setText(String.valueOf(building.getRating()));
+        holder.mTextViewShortName.setText(buildingShortName);
+        holder.mTextViewLongName.setText(buildingLongName);
+        holder.mTextViewRating.setText("Average Rating: " + avgRating);
+        Picasso.get().load(imageUrl).fit().centerInside().into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
-        return buildingList.size();
+        return mBuildingList.size();
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, textViewShortDesc, textViewRating, textViewPrice;
-        ImageView imageView;
+    public class BuildingViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextViewShortName, mTextViewLongName, mTextViewRating;
 
-        public ProductViewHolder(View itemView) {
+        public BuildingViewHolder(View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.textViewTitle);
-            textViewShortDesc = itemView.findViewById(R.id.textViewShortDesc);
-            textViewRating = itemView.findViewById(R.id.textViewRating);
-            imageView = itemView.findViewById(R.id.imageView);
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextViewShortName = itemView.findViewById(R.id.textBuildingShortName);
+            mTextViewLongName = itemView.findViewById(R.id.textBuildingLongName);
+            mTextViewRating = itemView.findViewById(R.id.textAvgRating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
