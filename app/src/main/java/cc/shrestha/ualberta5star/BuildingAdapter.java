@@ -48,7 +48,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
 
         holder.mTextViewShortName.setText(buildingShortName);
         holder.mTextViewLongName.setText(buildingLongName);
-        holder.mTextViewRating.setText("Average Rating: " + avgRating);
+        holder.mTextViewRating.setText("Avg Rating: " + avgRating);
         Picasso.get().load(imageUrl).fit().centerInside().into(holder.mImageView);
     }
 

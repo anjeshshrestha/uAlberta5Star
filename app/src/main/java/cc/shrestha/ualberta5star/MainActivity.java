@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements BuildingAdapter.O
 
     @Override
     public void onItemClick(int position) {
-        Intent detailIntent = new Intent(this, DetailActivity.class);
+        Intent detailIntent = new Intent(this, WashroomActivity.class);
         BuildingItem clickedItem = mBuildingList.get(position);
 
         detailIntent.putExtra(EXTRA_BUILDING_ID,clickedItem.getId());

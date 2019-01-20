@@ -16,6 +16,15 @@ import java.util.ArrayList;
 public class WashroomAdapter extends RecyclerView.Adapter<WashroomAdapter.WashroomViewHolder> {
     private Context mContext;
     private ArrayList<WashroomItem> mWashroomList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public WashroomAdapter(Context context, ArrayList<WashroomItem> washroomList) {
         mContext = context;
@@ -36,7 +45,6 @@ public class WashroomAdapter extends RecyclerView.Adapter<WashroomAdapter.Washro
         String name = currentItem.getName();
         String floor = currentItem.getFloor();
         double avgRating = currentItem.getRating();
-
 
         holder.mTextViewName.setText(name);
         holder.mTextViewFloor.setText(floor);
@@ -59,6 +67,19 @@ public class WashroomAdapter extends RecyclerView.Adapter<WashroomAdapter.Washro
             mTextViewName = itemView.findViewById(R.id.textViewTitle);
             mTextViewFloor = itemView.findViewById(R.id.textViewShortDesc);
             mTextViewRating = itemView.findViewById(R.id.textViewRating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
         }
     }
 }
