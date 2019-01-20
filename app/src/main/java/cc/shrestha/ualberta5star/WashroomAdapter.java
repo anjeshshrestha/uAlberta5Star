@@ -40,7 +40,7 @@ public class WashroomAdapter extends RecyclerView.Adapter<WashroomAdapter.Washro
 
         holder.mTextViewName.setText(name);
         holder.mTextViewFloor.setText(floor);
-        holder.mTextViewRating.setText("Average Rating: " + avgRating);
+        holder.mTextViewRating.setText("Avg Rating: " + avgRating);
         Picasso.get().load(imageUrl).fit().centerInside().into(holder.mImageView);
     }
 

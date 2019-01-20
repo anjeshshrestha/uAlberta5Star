@@ -30,6 +30,6 @@ public class WashroomItem {
     }
     public int getBuildingId(){return mbuildingID; }
     public double getRating() {
-        return 4.4;
+        return mRating;
     }
 }

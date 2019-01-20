@@ -47,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private void listWashroom() {
         String url = "http://www.shrestha.cc/washroom_api.php/";
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -62,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
                                 String washroomFloor = "Floor: " + hit.getString("floor");
                                 int buildingId = hit.getInt("b_id");
                                 String imageUrl = hit.getString("image");
-                                int avgRating = hit.getInt("rating");
+                                double avgRating = hit.getDouble("rating");
 
                                 if(mbuildingId == buildingId){
                                     mWashroomList.add(new WashroomItem(washroomId, washroomName, washroomFloor, buildingId, imageUrl, avgRating));

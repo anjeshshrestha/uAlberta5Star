@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements BuildingAdapter.O
                                 String buildingShortName = hit.getString("name");
                                 String buildingLongName = hit.getString("shortdesc");
                                 String imageUrl = hit.getString("image");
-                                double avgRating = hit.getInt("rating");
+                                double avgRating = hit.getDouble("rating");
 
                                 mBuildingList.add(new BuildingItem(buildingId, buildingShortName, buildingLongName, imageUrl, avgRating));
                             }
