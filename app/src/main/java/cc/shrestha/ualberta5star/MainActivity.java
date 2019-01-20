@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     Log.d("Stuff","working");
-                    JSONArray jsonArray = response.getJSONArray("");
+                    JSONArray jsonArray = response.getJSONArray("building");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         Log.d("Stuff","working");
                         //getting product object from json array
